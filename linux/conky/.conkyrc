@@ -1,79 +1,95 @@
--- Conky, a system monitor https://github.com/brndnmtthws/conky
---
--- This configuration file is Lua code. You can write code in here, and it will
--- execute when Conky loads. You can use it to generate your own advanced
--- configurations.
---
--- Try this (remove the `--`):
---
---   print("Loading Conky config")
---
--- For more on Lua, see:
--- https://www.lua.org/pil/contents.html
-
 conky.config = {
-    alignment = 'top_left',
     background = false,
-    border_width = 1,
-    cpu_avg_samples = 2,
-    default_color = 'white',
-    default_outline_color = 'white',
-    default_shade_color = 'white',
+    font = 'Ubuntu:bold:size=12',
+    override_utf8_locale = true,
+    uppercase = false,
+    use_xft = true,
+    xftalpha = 0.9,
+    update_interval = 0.6,
+    total_run_times = 0,
+    own_window = true,
+    own_window_colour = '111111',
+    own_window_type = 'desktop',
+    own_window_argb_visual = true,
+    own_window_argb_value = 65,
+    own_window_transparent = false,
+    own_window_class = 'conky',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
     double_buffer = true,
+    minimum_width = 400,
+    maximum_width = 400,
+    draw_shades = false,
+    draw_outline = false,
     draw_borders = false,
     draw_graph_borders = true,
-    draw_outline = false,
-    draw_shades = false,
-    extra_newline = false,
-    font = 'DejaVu Sans Mono:size=12',
-    gap_x = 60,
-    gap_y = 60,
-    minimum_height = 5,
-    minimum_width = 5,
-    net_avg_samples = 2,
-    no_buffers = true,
-    out_to_console = false,
-    out_to_ncurses = false,
-    out_to_stderr = false,
-    out_to_x = true,
-    own_window = true,
-    own_window_class = 'Conky',
-    own_window_type = 'desktop',
-    show_graph_range = false,
-    show_graph_scale = false,
-    stippled_borders = 0,
-    update_interval = 1.0,
-    uppercase = false,
-    use_spacer = 'none',
-    use_xft = true,
+    default_color = 'DAD7D3',
+    default_shade_color = '333333',
+   default_outline_color = '333333',
+    gap_x = 24,
+    gap_y = 40,
+    alignment = 'tr',
+    no_buffers = false,
+    cpu_avg_samples = 2,
 }
 
 conky.text = [[
-${color grey}Info:$color ${scroll 32 Conky $conky_version - $sysname $nodename $kernel $machine}
-$hr
-${color grey}Uptime:$color $uptime
-${color red}Frequency (in MHz):$color $freq
-${color red}Frequency (in GHz):$color $freq_g
-${color yellow}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
-${color yellow}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
-${color grey}CPU Usage:$color $cpu% ${cpubar 4}
-${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
-$hr
-${color grey}File systems:
- / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
-${color grey}Networking:
-Up:$color ${upspeed} ${color grey} - Down:$color ${downspeed}
-$hr
-${color grey}Name              PID     CPU%   MEM%
-${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
-${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
-${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
-${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
-${color lightgrey} ${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
-$hr
-${color red}VPN IP: $color${addr tun0}
-${color red}Interfaz Activa: $color${execi 30 /home/kronos/Documentos/Script/.get_active_interface.sh}
-${color grey}IP Pública: $color${execi 600 /home/kronos/Documentos/Script/.get_public_ip.sh}
-${color grey}País: $color${execi 3600 /home/kronos/Documentos/Script/get_country.sh}
-${color blue}IP Privada: $color${execi 3600 /home/kronos/Documentos/Script/get_all_ips.sh}
-]];
+Battery $alignr${exec cat /sys/class/power_supply/BAT1/capacity}% ${color 4E9A06}${battery_bar 6,75 BAT1}${color DAD7D3}${if_existing /sys/class/power_supply/BAT1/status Discharging}
+$alignr${exec cat /sys/class/power_supply/BAT1/time_to_empty_now} remaining$endif${if_existing /sys/class/power_supply/BAT1/status Charging}
+$alignr${exec cat /sys/class/power_supply/BAT1/time_to_full_now} until fully charged$endif
+
+Uptime $alignr$uptime_short
+Sytem Temp $alignr$acpitemp°C
+
+CPU Core 1 $alignr${freq 1} MHz ${color AEA79F}${cpubar cpu1 6,90}${color DAD7D3}
+CPU Core 2 $alignr${freq 2} MHz ${color AEA79F}${cpubar cpu2 6,90}${color DAD7D3}
+CPU Core 3 $alignr${freq 3} MHz ${color AEA79F}${cpubar cpu3 6,90}${color DAD7D3}
+CPU Core 4 $alignr${freq 4} MHz ${color AEA79F}${cpubar cpu4 6,90}${color DAD7D3}
+CPU Core 5 $alignr${freq 5} MHz ${color AEA79F}${cpubar cpu5 6,90}${color DAD7D3}
+CPU Core 6 $alignr${freq 6} MHz ${color AEA79F}${cpubar cpu6 6,90}${color DAD7D3}
+CPU Core 7 $alignr${freq 7} MHz ${color AEA79F}${cpubar cpu7 6,90}${color DAD7D3}
+CPU Core 8 $alignr${freq 8} MHz ${color AEA79F}${cpubar cpu8 6,90}${color DAD7D3}
+CPU Core 9 $alignr${freq 9} MHz ${color AEA79F}${cpubar cpu9 6,90}${color DAD7D3}
+CPU Core 10 $alignr${freq 10} MHz ${color AEA79F}${cpubar cpu10 6,90}${color DAD7D3}
+CPU Core 11 $alignr${freq 11} MHz ${color AEA79F}${cpubar cpu11 6,90}${color DAD7D3}
+CPU Core 12 $alignr${freq 12} MHz ${color AEA79F}${cpubar cpu12 6,90}${color DAD7D3}
+CPU Core 13 $alignr${freq 13} MHz ${color AEA79F}${cpubar cpu13 6,90}${color DAD7D3}
+CPU Core 14 $alignr${freq 14} MHz ${color AEA79F}${cpubar cpu14 6,90}${color DAD7D3}
+CPU Core 15 $alignr${freq 15} MHz ${color AEA79F}${cpubar cpu15 6,90}${color DAD7D3}
+CPU Core 16 $alignr${freq 16} MHz ${color AEA79F}${cpubar cpu16 6,90}${color DAD7D3}
+
+CPU Load $alignr${color AEA79F}${loadgraph 18,145 7E290D DA4816}${color DAD7D3}
+GPU Core $alignr${execi 60 nvidia-smi --query-gpu=clocks.gr --format=csv,noheader,nounits} MHz
+GPU Memory $alignr${execi 60 nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits} MiB
+GPU Temp $alignr${execi 60 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits}°C
+
+
+Memory $alignr$memmax  ${color AEA79F}${membar 6,90}${color DAD7D3}
+Swap $alignr$swapmax  ${color AEA79F}${swapbar 6,90}${color DAD7D3}
+
+File System $alignr$fs_size  ${color AEA79F}${fs_bar 6,90}${color DAD7D3}
+${if_existing /sys/class/net/wlo1/operstate up}
+Wi-Fi Network $alignr${wireless_essid wlo1}
+Router IP Address $alignr${execi 60 ip route | awk '/default/ { print $3 }'}
+Link Quality $alignr${wireless_link_qual_perc wlo1}% (${wireless_link_qual wlo1}/${wireless_link_qual_max wlo1})
+IPv4 Address $alignr${addr wlo1}
+${color AEA79F}${downspeedgraph wlo1 24,103 3B1037 8B2782} $alignr${upspeedgraph wlo1 24,103 3B1037 8B2782}${color DAD7D3}
+Down ${downspeedf wlo1} KiB/s$alignr Up ${upspeedf wlo1} KiB/s
+Total ${totaldown wlo1}$alignr Total ${totalup wlo1}
+$endif${if_existing /sys/class/net/enp0s25/operstate up}
+Wired Network
+Link Speed $alignr${exec cat /sys/class/net/enp0s25/speed} Mb/s
+IPv4 Address $alignr${addr enp0s25}
+${color AEA79F}${downspeedgraph enp0s25 24,103 3B1037 8B2782} $alignr${upspeedgraph enp0s25 24,103 3B1037 8B2782}${color DAD7D3}
+Down ${downspeedf enp0s25} KiB/s$alignr Up ${upspeedf enp0s25} KiB/s
+Total ${totaldown enp0s25}$alignr Total ${totalup enp0s25}
+$endif${if_existing /sys/class/net/bnep0/operstate unknown}
+Bluetooth Network
+IPv4 Address $alignr${addr bnep0}
+${color AEA79F}${downspeedgraph bnep0 24,103 3B1037 8B2782} $alignr${upspeedgraph bnep0 24,103 3B1037 8B2782}${color DAD7D3}
+Down ${downspeedf bnep0} KiB/s$alignr Up ${upspeedf bnep0} KiB/s
+Total ${totaldown bnep0}$alignr Total ${totalup bnep0}
+$endif$if_gw
+Public IP Address $alignr${execi 60 curl  ipinfo.io/ip}
+Location $alignr${execi 60 curl  ipinfo.io/city}, ${execi 60 curl  ipinfo.io/country}$endif
+
+]]
