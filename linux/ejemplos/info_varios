@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# Información del sistema, hardware, redes, y otros detalles en Linux
+
+# Información de la Placa Base
+echo "Información de la Placa Base:"
+echo "============================="
+sudo dmidecode -t baseboard
+
+# Información de los Sockets de la CPU
+echo ""
+echo "Información de los Sockets de la CPU:"
+echo "===================================="
+sudo dmidecode -t processor | grep 'Socket Designation'
+
+# Información de la Memoria
+echo ""
+echo "Información de la Memoria:"
+echo "=========================="
+sudo dmidecode -t memory | grep -E 'Size:|Speed:|Voltage:|Form Factor:|Part Number:|Configured Clock Speed:|Manufacturer:|Serial Number:|Asset Tag:'
+
+# Información de la Fuente de Alimentación
+echo ""
+echo "Información de la Fuente de Alimentación:"
+echo "========================================"
+sudo dmidecode -t chassis
+
+# Información del Disco Duro
+echo ""
+echo "Información del Disco Duro:"
+echo "==========================="
+sudo lsblk -o NAME,SIZE,MODEL,SERIAL
+
+# Información Adicional del Sistema
+echo ""
+echo "Información Adicional del Sistema (Micro ATX, Conectores):"
+echo "========================================================="
+sudo dmidecode -t chassis
+
+# Información de Redes
+echo ""
+echo "Información de Interfaces de Red:"
+echo "================================="
+ip addr show
+
+echo ""
+echo "Información de Rutas de Red:"
+echo "============================"
+ip route show
+
+echo ""
+echo "Estado de las Interfaces de Red:"
+echo "============================="
+ip link show
+
+echo ""
+echo "Estadísticas de Interfaces de Red:"
+echo "=================================="
+cat /proc/net/dev
+
+echo ""
+echo "Servidores DNS:"
+echo "==============="
+cat /etc/resolv.conf
+
+echo ""
+echo "Conexiones Activas (netstat):"
+echo "============================="
+sudo netstat -tuln
+
+# Añadir sugerencias adicionales
+
+echo ""
+echo "Detalles avanzados de la tarjeta de red:"
+echo "========================================"
+# Reemplazar <nombre_de_la_interfaz> por el nombre correcto de la interfaz, como eth0 o ens33
+sudo ethtool <nombre_de_la_interfaz>
+
+echo ""
+echo "Usuarios conectados:"
+echo "===================="
+who
+
+echo ""
+echo "Actividad actual de los usuarios:"
+echo "================================="
+w
+
+echo ""
+echo "Información SMART de los discos duros:"
+echo "======================================"
+sudo smartctl -a /dev/sda  # Cambiar /dev/sda por el disco correspondiente
+
+echo ""
+echo "Uso de CPU y Memoria (resumen):"
+echo "=============================="
+top -bn1 | head -n 10
+
+echo ""
+echo "Dispositivos PCI conectados:"
+echo "==========================="
+lspci
+
+echo ""
+echo "Dispositivos USB conectados:"
+echo "==========================="
+lsusb
+
+echo ""
+echo "Últimos mensajes del kernel:"
+echo "============================"
+dmesg | tail -n 20

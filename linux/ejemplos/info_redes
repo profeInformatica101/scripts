@@ -1,0 +1,36 @@
+# Información de Redes
+echo ""
+echo "Información de Interfaces de Red:"
+echo "================================="
+# Usar ip o ifconfig para listar las interfaces de red y sus direcciones IP
+ip addr show
+
+echo ""
+echo "Información de Rutas de Red:"
+echo "============================"
+# Mostrar las rutas de red
+ip route show
+
+echo ""
+echo "Información del Estado de las Interfaces de Red:"
+echo "================================================"
+# Mostrar el estado de las interfaces de red
+ip link show
+
+echo ""
+echo "Estadísticas de Interfaces de Red:"
+echo "=================================="
+# Mostrar estadísticas de tráfico de red
+cat /proc/net/dev
+
+echo ""
+echo "Servidores DNS:"
+echo "==============="
+# Mostrar la configuración de DNS
+cat /etc/resolv.conf
+
+echo ""
+echo "Conexiones Activas (netstat):"
+echo "============================="
+# Mostrar conexiones activas
+sudo netstat -tuln
