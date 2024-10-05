@@ -1,0 +1,16 @@
+# Path de home
+echo $HOME
+
+# Hubo un error --> 127  | No hubo error --> 0
+echo $?
+
+
+# Nombre de la máquina
+echo $HOST
+
+
+# Si no le das la ruta (./) va a buscar mirando uno a uno del PATH ese comando
+echo $PATH 
+
+# Ver path trabajo actual
+echo $PWD
