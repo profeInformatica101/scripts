@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# Contar argumentos con $*
+count_star=$(echo "$*" | wc -w)
+
+# Contar argumentos con $@
+count_at=$(echo "$@" | wc -w)
+
+# Imprimir el número de argumentos contados
+echo "Número de argumentos con \$*: $count_star"
+echo "Número de argumentos con \$@: $count_at"
+
+
+# Bucle for sencillo
+for i in a b c d
+do
+    echo "El valor actual es: $i"
+done

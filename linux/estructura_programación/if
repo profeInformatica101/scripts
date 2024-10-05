@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ "$1" = "hola" ]
+then
+    echo "Esto se verá si la condición es VERDAD"
+else
+    echo "Esto se verá si la condición es FALSA"
+fi
+echo FIN

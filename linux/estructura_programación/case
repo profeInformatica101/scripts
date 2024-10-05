@@ -1,0 +1,19 @@
+#!/bin/bash
+case $1 in
+  "hola")
+    echo "ES HOLA"
+    ;;
+  "adios")
+    echo "ES ADIOS"
+    ;;
+  "linux")
+    echo "ES LINUX"
+    ;;
+  *)
+    echo "ES OTRA COSA"
+    ls
+    pwd
+    ;;
+esac
+
+echo "FIN"
