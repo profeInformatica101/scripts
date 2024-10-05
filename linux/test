@@ -1,0 +1,5 @@
+#! /bin/bash
+echo usa como comando 'chmod u+x test' o 'chmod u-x test' para cambiar permisos de escritura
+date
+echo a continuación ejecuta 'ls' y veras como cambia de color el archivo 'test'
+
