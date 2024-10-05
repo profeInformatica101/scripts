@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Verifica el valor del primer argumento ($1)
+if [ "$1" = "hola" ]; then
+    echo "Has dicho hola"
+elif [ "$1" = "adios" ]; then
+    echo "Has dicho adios"
+elif [ "$1" = "linux" ]; then
+    echo "Has mencionado linux"
+else
+    echo "No reconozco lo que has dicho"
+fi
+
+echo "FIN"
