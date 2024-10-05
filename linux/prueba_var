@@ -1,6 +1,10 @@
 #! /bin/bash
 echo Hola Mundo
+
+# asignación de valor
 var="hola"
+
+# uso de la variable
 echo x $var
 echo x${var}x
 
