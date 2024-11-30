@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# Función para leer los números del usuario
+leer_numeros() {
+    read -p "Introduce el primer número: " num1
+    read -p "Introduce el segundo número: " num2
+}
+
+# Función para la suma
+suma() {
+    local num1=$1
+    local num2=$2
+    local resultado=$((num1 + num2))
+    echo "El resultado de la suma es: $resultado"
+}
+
+# Función para la resta
+resta() {
+    local num1=$1
+    local num2=$2
+    local resultado=$((num1 - num2))
+    echo "El resultado de la resta es: $resultado"
+}
+
+# Función para la división
+division() {
+    local num1=$1
+    local num2=$2
+    if [ "$num2" -eq 0 ]; then
+        echo "Error: No se puede dividir entre cero."
+    else
+        local resultado=$((num1 / num2))
+        echo "El resultado de la división es: $resultado"
+    fi
+}
+
+# Función para la multiplicación
+multiplicacion() {
+    local num1=$1
+    local num2=$2
+    local resultado=$((num1 * num2))
+    echo "El resultado de la multiplicación es: $resultado"
+}
+
+# Función para mostrar el menú
+mostrar_menu() {
+    echo "CALCULADORA"
+    echo "1. SUMA"
+    echo "2. RESTA"
+    echo "3. DIVISIÓN"
+    echo "4. MULTIPLICACIÓN"
+    echo "5. SALIR"
+}
+
+# Loop para mostrar el menú hasta que se elija salir
+while true; do
+    mostrar_menu
+    read -p "Elige una opción: " opcion
+
+    case $opcion in
+        1)
+            leer_numeros
+            suma $num1 $num2
+            ;;
+        2)
+            leer_numeros
+            resta $num1 $num2
+            ;;
+        3)
+            leer_numeros
+            division $num1 $num2
+            ;;
+        4)
+            leer_numeros
+            multiplicacion $num1 $num2
+            ;;
+        5)
+            echo "Saliendo del programa..."
+            break
+            ;;
+        *)
+            echo "Opción no válida. Por favor, elige una opción del 1 al 5."
+            ;;
+    esac
+
+    # Añadir una pausa antes de mostrar el menú de nuevo
+    read -p "Presiona Enter para continuar..."
+    clear
+done

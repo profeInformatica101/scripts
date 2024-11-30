@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Nombre del archivo de la agenda
+AGENDA="agenda.txt"
+
+# Función para mostrar el menú
+mostrar_menu() {
+    echo "AGENDA TELEFÓNICA"
+    echo "1. Ver contactos"
+    echo "2. Añadir contacto"
+    echo "3. Borrar contacto"
+    echo "4. Salir"
+}
+
+# Función para ver los contactos
+ver_contactos() {
+    if [ ! -f "$AGENDA" ]; then
+        echo "La agenda está vacía."
+    else
+        echo "Lista de contactos:"
+        cat -n "$AGENDA"
+    fi
+}
+
+# Función para añadir un contacto
+añadir_contacto() {
+    read -p "Introduce el nombre del contacto: " nombre
+    read -p "Introduce el teléfono del contacto: " telefono
+    echo "$nombre - $telefono" >> "$AGENDA"
+    echo "Contacto añadido con éxito."
+}
+
+# Función para borrar un contacto
+borrar_contacto() {
+    if [ ! -f "$AGENDA" ]; then
+        echo "La agenda está vacía. No hay nada que borrar."
+    else
+        ver_contactos
+        read -p "Introduce el número de la línea del contacto a borrar: " linea
+        sed -i "${linea}d" "$AGENDA"
+        echo "Contacto borrado con éxito."
+    fi
+}
+
+# Bucle para mostrar el menú hasta que se elija salir
+while true; do
+    mostrar_menu
+    read -p "Elige una opción: " opcion
+
+    case $opcion in
+        1)
+            ver_contactos
+            ;;
+        2)
+            añadir_contacto
+            ;;
+        3)
+            borrar_contacto
+            ;;
+        4)
+            echo "Saliendo del programa..."
+            break
+            ;;
+        *)
+            echo "Opción no válida. Por favor, elige una opción del 1 al 4."
+            ;;
+    esac
+
+    # Pausa antes de mostrar el menú de nuevo
+    read -p "Presiona Enter para continuar..."
+    clear
+done
