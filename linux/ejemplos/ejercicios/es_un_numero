@@ -1,0 +1,25 @@
+#!/bin/bash
+#Nos pregunta la edad y que nos conteste
+
+clear
+read -p "Que edad tienes? " edad
+
+#comprobamos que ha escrito un numero y que no este vacio
+if [ -n "$edad" ] && [ "$edad" -eq "$edad" ] 2>/dev/null
+then
+    #Iniciamos comprobación
+    if [ "$edad" -lt 10 ]
+    then
+        echo "Que joven eres"
+    elif [ "$edad" -ge 10 ] && [ "$edad" -le 30 ]
+    then
+        echo "Que mala edad tienes"
+    else
+        echo "Que bien te veo"
+    fi
+else
+    echo "La edad introducida no es un numero"
+fi
+
+if [ -n "$edad" ] && [ "$edad" -eq "$edad" ] 2>/dev/null
+if [ -n "$edad" ] || [ "$edad" -eq "$edad" ] 2>/dev/null

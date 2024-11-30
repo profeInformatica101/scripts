@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Variables que se van a sumar
+num1=5
+num2=3
+
+# Uso recomendado con $()
+result=$(expr $num1 + $num2)
+echo "La suma usando \$() es: $result"
+
+# Uso antiguo con comillas invertidas (No recomendado)
+result=`expr $num1 + $num2`
+echo "La suma usando comillas invertidas es: $result"

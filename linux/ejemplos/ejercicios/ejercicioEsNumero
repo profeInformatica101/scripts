@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Limpiar pantalla
+clear
+
+# Solicitar al usuario un número
+read -p "Introduce un número: " num1
+
+# Expresión regular para validar si el input es un número
+es_numero='^(-)?[0-9]+([.][0-9]+)?$'
+
+# Validación con la expresión regular
+if [[ $num1 =~ $es_numero ]]; then
+    echo "Num1 es un número"
+else
+    echo "Num1 no es un número"
+fi

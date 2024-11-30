@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Introducción del script
+# Realizar operaciones aritméticas básicas: suma, resta, multiplicación, división y resto de dos números introducidos por el usuario.
+
+# Limpiar pantalla
+clear
+
+# Pedir al usuario que introduzca dos números
+read -p "Introduzca 2 números separados por un espacio: " num1 num2
+
+# Mostrar los valores introducidos
+echo "El número num1 vale: $num1"
+echo "El número num2 vale: $num2"
+
+# Comprobar si los valores introducidos son números
+es_numero='^(-)?[0-9]+([.][0-9]+)?$'
+
+if [[ $num1 =~ $es_numero ]] && [[ $num2 =~ $es_numero ]]; then
+    echo "Num1 y Num2 son números"
+else
+    echo "Alguno de los argumentos no es un número"
+    exit 2
+fi
+
+# Realizar operaciones si ambos números son válidos
+if [ -n "$num1" ] && [ -n "$num2" ]; then
+    # Uso de $((...)) para realizar las operaciones aritméticas
+    S=$((num1 + num2))
+    R=$((num1 - num2))
+    M=$((num1 * num2))
+    
+    # Manejo de división para evitar división por cero
+    if [ "$num2" -ne 0 ]; then
+        D=$((num1 / num2))
+        r=$((num1 % num2))
+    else
+        D="Infinito (división por cero)"
+        r="No definido (división por cero)"
+    fi
+
+    # Mostrar los resultados
+    echo "Los resultados son:"
+    echo "Suma = $S"
+    echo "Resta = $R"
+    echo "Multiplicación = $M"
+    echo "División = $D"
+    echo "Resto = $r"
+else
+    echo "El número de parámetros debe ser 2"
+fi

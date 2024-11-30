@@ -7,6 +7,7 @@ clear
 read -p "Introduce un nombre de usuario: " usuario
 
 # Comprobar que existe el usuario
+#existe=`cat /etc/passwd | grep $usuario`
 existe=`getent passwd $usuario`
 
 if [ "$existe" = "" ]
