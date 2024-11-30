@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Limpiar pantalla
+clear
+
+# Definir una cadena de ejemplo
+cadena="hola:adios:pepe:amigo"
+
+# Imprimir la cadena original
+echo "Cadena original: $cadena"
+
+# Uso de cut para extraer caracteres específicos
+echo "Extrayendo los tres primeros caracteres:"
+echo "$cadena" | cut -c1-3
+
+# Uso de cut para extraer campos específicos utilizando ':' como delimitador
+echo "Extrayendo el primer campo (delimitador ':'):"
+echo "$cadena" | cut -d':' -f1
+
+echo "Extrayendo el segundo campo (delimitador ':'):"
+echo "$cadena" | cut -d':' -f2
+
+echo "Extrayendo el tercer campo (delimitador ':'):"
+echo "$cadena" | cut -d':' -f3
+
+echo "Extrayendo el cuarto campo (delimitador ':'):"
+echo "$cadena" | cut -d':' -f4
+
+# Extracción de múltiples campos
+echo "Extrayendo los campos 2 y 3 (delimitador ':'):"
+echo "$cadena" | cut -d':' -f2,3
+
+# Ejemplo con un espacio como delimitador
+otra_cadena="manzana pera platano naranja"
+echo "Cadena con espacios como delimitador: $otra_cadena"
+echo "Extrayendo el segundo campo (delimitador ' '):"
+echo "$otra_cadena" | cut -d' ' -f2
+

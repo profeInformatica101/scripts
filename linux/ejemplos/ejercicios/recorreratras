@@ -1,0 +1,5 @@
+# Limpiar pantalla
+clear
+
+# Pedir al usuario que introduzca dos números
+read -p "Introduzca 2 números separados por un espacio: " num1 

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Limpiar pantalla
+clear
+
+# Leer la palabra del usuario
+read -p "Introduce una palabra: " palabra
+
+# Inicializar una variable vacía para almacenar la palabra al revés
+invertida=""
+
+# Obtener la longitud de la palabra
+longitud=${#palabra}
+
+# Recorrer la palabra desde el final hasta el principio
+for (( i=$longitud-1; i>=0; i-- )); do
+    # Añadir cada carácter a la variable 'invertida'
+    invertida="$invertida${palabra:$i:1}"
+done
+
+# Mostrar el resultado
+echo "La palabra invertida es: $invertida"
+
+echo $palabra | rev 

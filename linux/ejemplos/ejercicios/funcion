@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Función para la suma
+suma() {
+    read -p "Introduce el primer número: " num1
+    read -p "Introduce el segundo número: " num2
+    resultado=$((num1 + num2))
+    echo "El resultado de la suma es: $resultado"
+}
+
+# Función para la resta
+resta() {
+    read -p "Introduce el primer número: " num1
+    read -p "Introduce el segundo número: " num2
+    resultado=$((num1 - num2))
+    echo "El resultado de la resta es: $resultado"
+}
+
+# Función para la división
+division() {
+    read -p "Introduce el primer número: " num1
+    read -p "Introduce el segundo número: " num2
+    if [ "$num2" -eq 0 ]; then
+        echo "Error: No se puede dividir entre cero."
+    else
+        resultado=$((num1 / num2))
+        echo "El resultado de la división es: $resultado"
+    fi
+}
+
+# Función para la multiplicación
+multiplicacion() {
+    read -p "Introduce el primer número: " num1
+    read -p "Introduce el segundo número: " num2
+    resultado=$((num1 * num2))
+    echo "El resultado de la multiplicación es: $resultado"
+}
+
+# Función para mostrar el menú
+mostrar_menu() {
+    echo "CALCULADORA"
+    echo "1. SUMA"
+    echo "2. RESTA"
+    echo "3. DIVISIÓN"
+    echo "4. MULTIPLICACIÓN"
+    echo "5. SALIR"
+}
+
+# Loop para mostrar el menú hasta que se elija salir
+while true; do
+    mostrar_menu
+    read -p "Elige una opción: " opcion
+
+    case $opcion in
+        1)
+            suma
+            ;;
+        2)
+            resta
+            ;;
+        3)
+            division
+            ;;
+        4)
+            multiplicacion
+            ;;
+        5)
+            echo "Saliendo del programa..."
+            break
+            ;;
+        *)
+            echo "Opción no válida. Por favor, elige una opción del 1 al 5."
+            ;;
+    esac
+
+    # Añadir una pausa antes de mostrar el menú de nuevo
+    read -p "Presiona Enter para continuar..."
+    clear
+done
