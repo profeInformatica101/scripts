@@ -1,79 +1,117 @@
 #!/bin/bash
 
-# Función para la suma
-suma() {
-    read -p "Introduce el primer número: " num1
-    read -p "Introduce el segundo número: " num2
-    resultado=$((num1 + num2))
-    echo "El resultado de la suma es: $resultado"
+# Nombre del archivo donde se guarda la agenda
+AGENDA="Agenda"
+
+# Función para mostrar el menú
+menu() {
+    echo "======================== MENU ========================"
+    echo "1. Añadir Registro"
+    echo "2. Listar Agenda"
+    echo "3. Borrar Agenda Completa"
+    echo "4. Eliminar un Registro"
+    echo "5. Modificar un Registro"
+    echo "6. Salir"
+    echo "======================================================"
 }
 
-# Función para la resta
-resta() {
-    read -p "Introduce el primer número: " num1
-    read -p "Introduce el segundo número: " num2
-    resultado=$((num1 - num2))
-    echo "El resultado de la resta es: $resultado"
+# Función para mostrar mensajes de error
+error() {
+    echo "Error: $1"
+    return 1
 }
 
-# Función para la división
-division() {
-    read -p "Introduce el primer número: " num1
-    read -p "Introduce el segundo número: " num2
-    if [ "$num2" -eq 0 ]; then
-        echo "Error: No se puede dividir entre cero."
+# Función para añadir un nuevo registro a la agenda
+añadir() {
+    echo "Añadiendo un nuevo contacto a la agenda..."
+    read -p "Introduce Nombre: " nombre
+    read -p "Introduce Apellidos: " apellidos
+    read -p "Introduce Teléfono: " telefono
+    echo "$nombre:$apellidos:$telefono" >> "$AGENDA"
+    echo "Contacto añadido correctamente."
+    listar
+}
+
+# Función para listar todos los registros de la agenda
+listar() {
+    echo "========== LISTA DE CONTACTOS =========="
+    if [ ! -f "$AGENDA" ] || [ ! -s "$AGENDA" ]; then
+        echo "La agenda está vacía."
     else
-        resultado=$((num1 / num2))
-        echo "El resultado de la división es: $resultado"
+        cat -n "$AGENDA" | awk -F':' '{print $1". Nombre: "$2", Apellidos: "$3", Teléfono: "$4}'
+    fi
+    echo "========================================"
+}
+
+# Función para borrar toda la agenda
+borrar_agenda() {
+    read -p "¿Estás seguro de que deseas borrar toda la agenda? (s/n): " confirmacion
+    if [ "$confirmacion" == "s" ]; then
+        > "$AGENDA"
+        echo "La agenda ha sido borrada por completo."
+    else
+        echo "Operación cancelada."
     fi
 }
 
-# Función para la multiplicación
-multiplicacion() {
-    read -p "Introduce el primer número: " num1
-    read -p "Introduce el segundo número: " num2
-    resultado=$((num1 * num2))
-    echo "El resultado de la multiplicación es: $resultado"
+# Función para eliminar un registro específico
+eliminar_registro() {
+    listar
+    read -p "Introduce el número del contacto que deseas eliminar: " num
+    if [ -f "$AGENDA" ] && [ ! -z "$num" ]; then
+        sed -i "${num}d" "$AGENDA"
+        echo "El registro ha sido eliminado con éxito."
+    else
+        error "No se ha podido eliminar el registro. Asegúrate de introducir un número válido."
+    fi
 }
 
-# Función para mostrar el menú
-mostrar_menu() {
-    echo "CALCULADORA"
-    echo "1. SUMA"
-    echo "2. RESTA"
-    echo "3. DIVISIÓN"
-    echo "4. MULTIPLICACIÓN"
-    echo "5. SALIR"
+# Función para modificar un registro
+modificar_registro() {
+    listar
+    read -p "Introduce el número del contacto que deseas modificar: " num
+    if [ -f "$AGENDA" ] && [ ! -z "$num" ]; then
+        read -p "Introduce el nuevo Nombre: " nombre
+        read -p "Introduce el nuevo Apellido: " apellidos
+        read -p "Introduce el nuevo Teléfono: " telefono
+        sed -i "${num}s/.*/$nombre:$apellidos:$telefono/" "$AGENDA"
+        echo "El registro ha sido modificado correctamente."
+    else
+        error "No se ha podido modificar el registro. Asegúrate de introducir un número válido."
+    fi
 }
 
-# Loop para mostrar el menú hasta que se elija salir
+# Bucle principal del programa
 while true; do
-    mostrar_menu
+    menu
     read -p "Elige una opción: " opcion
 
     case $opcion in
         1)
-            suma
+            añadir
             ;;
         2)
-            resta
+            listar
             ;;
         3)
-            division
+            borrar_agenda
             ;;
         4)
-            multiplicacion
+            eliminar_registro
             ;;
         5)
-            echo "Saliendo del programa..."
+            modificar_registro
+            ;;
+        6)
+            echo "Saliendo del programa... ¡Hasta luego!"
             break
             ;;
         *)
-            echo "Opción no válida. Por favor, elige una opción del 1 al 5."
+            error "Opción no válida. Por favor, elige una opción entre 1 y 6."
             ;;
     esac
 
-    # Añadir una pausa antes de mostrar el menú de nuevo
+    # Pausa antes de mostrar el menú de nuevo
     read -p "Presiona Enter para continuar..."
     clear
 done

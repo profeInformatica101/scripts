@@ -1,68 +1,113 @@
 #!/bin/bash
 
-# Nombre del archivo de la agenda
-AGENDA="agenda.txt"
+# Nombre del archivo donde se guarda la agenda
+AGENDA="Agenda"
 
 # Función para mostrar el menú
-mostrar_menu() {
-    echo "AGENDA TELEFÓNICA"
-    echo "1. Ver contactos"
-    echo "2. Añadir contacto"
-    echo "3. Borrar contacto"
-    echo "4. Salir"
+menu() {
+    echo "======================== MENU ========================"
+    echo "1. Añadir Registro"
+    echo "2. Listar Agenda"
+    echo "3. Borrar Agenda Completa"
+    echo "4. Eliminar un Registro"
+    echo "5. Modificar un Registro"
+    echo "6. Salir"
+    echo "======================================================"
 }
 
-# Función para ver los contactos
-ver_contactos() {
-    if [ ! -f "$AGENDA" ]; then
+# Función para mostrar mensajes de error
+error() {
+    echo "Error: $1"
+    return 1
+}
+
+# Función para añadir un nuevo registro a la agenda
+añadir() {
+    echo "Añadiendo un nuevo contacto a la agenda..."
+    read -p "Introduce Nombre: " nombre
+    read -p "Introduce Apellidos: " apellidos
+    read -p "Introduce Teléfono: " telefono
+    echo "$nombre:$apellidos:$telefono" >> "$AGENDA"
+    echo "Contacto añadido correctamente."
+    listar
+}
+
+# Función para listar todos los registros de la agenda
+listar() {
+    echo "========== LISTA DE CONTACTOS =========="
+    if [ ! -f "$AGENDA" ] || [ ! -s "$AGENDA" ]; then
         echo "La agenda está vacía."
     else
-        echo "Lista de contactos:"
-        cat -n "$AGENDA"
+        cat -n "$AGENDA" | awk -F':' '{print $1". Nombre: "$2", Apellidos: "$3", Teléfono: "$4}'
     fi
+    echo "========================================"
 }
 
-# Función para añadir un contacto
-añadir_contacto() {
-    read -p "Introduce el nombre del contacto: " nombre
-    read -p "Introduce el teléfono del contacto: " telefono
-    echo "$nombre - $telefono" >> "$AGENDA"
-    echo "Contacto añadido con éxito."
-}
-
-# Función para borrar un contacto
-borrar_contacto() {
-    if [ ! -f "$AGENDA" ]; then
-        echo "La agenda está vacía. No hay nada que borrar."
+# Función para borrar toda la agenda
+borrar_agenda() {
+    read -p "¿Estás seguro de que deseas borrar toda la agenda? (s/n): " confirmacion
+    if [ "$confirmacion" == "s" ]; then
+        > "$AGENDA"
+        echo "La agenda ha sido borrada por completo."
     else
-        ver_contactos
-        read -p "Introduce el número de la línea del contacto a borrar: " linea
-        sed -i "${linea}d" "$AGENDA"
-        echo "Contacto borrado con éxito."
+        echo "Operación cancelada."
     fi
 }
 
-# Bucle para mostrar el menú hasta que se elija salir
+# Función para eliminar un registro específico
+eliminar_registro() {
+    listar
+    read -p "Introduce el número del contacto que deseas eliminar: " num
+    if [ -f "$AGENDA" ] && [ ! -z "$num" ]; then
+        sed -i "${num}d" "$AGENDA"
+        echo "El registro ha sido eliminado con éxito."
+    else
+        error "No se ha podido eliminar el registro. Asegúrate de introducir un número válido."
+    fi
+}
+
+# Función para modificar un registro
+modificar_registro() {
+    listar
+    read -p "Introduce el número del contacto que deseas modificar: " num
+    if [ -f "$AGENDA" ] && [ ! -z "$num" ]; then
+        read -p "Introduce el nuevo Nombre: " nombre
+        read -p "Introduce el nuevo Apellido: " apellidos
+        read -p "Introduce el nuevo Teléfono: " telefono
+        sed -i "${num}s/.*/$nombre:$apellidos:$telefono/" "$AGENDA"
+        echo "El registro ha sido modificado correctamente."
+    else
+        error "No se ha podido modificar el registro. Asegúrate de introducir un número válido."
+    fi
+}
+
+# Bucle principal del programa
 while true; do
-    mostrar_menu
+    menu
     read -p "Elige una opción: " opcion
 
     case $opcion in
         1)
-            ver_contactos
+            añadir
             ;;
         2)
-            añadir_contacto
+            listar
             ;;
         3)
-            borrar_contacto
+            borrar_agenda
             ;;
         4)
-            echo "Saliendo del programa..."
+            eliminar_registro
+            ;;
+        5)
+            modificar_registro
+            ;;
+        6)
+            echo "Saliendo del programa... ¡Hasta luego!"
             break
             ;;
         *)
-            echo "Opción no válida. Por favor, elige una opción del 1 al 4."
+            error "Opción no válida. Por favor, elige una opción entre 1 y 6."
             ;;
     esac
 
